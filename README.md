@@ -1,0 +1,1 @@
+# charakoba_fault_info
