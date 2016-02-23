@@ -55,5 +55,5 @@ except:
     db.rollback()
     quit()
 
-print("Status: 200 OK\r\n")
+print("Status: 201 Created\r\n")
 print("failinfo_id: " + info.id)
