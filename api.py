@@ -9,6 +9,7 @@ from peewee import *
 from requests_oauthlib import OAuth1Session
 
 def main():
+    print("Content-Type: text/plain")
     if check_method("POST"):
         with open("config.json") as f:
             conf = json.loads(f)
