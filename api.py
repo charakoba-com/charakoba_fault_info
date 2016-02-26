@@ -8,7 +8,9 @@ import os
 from peewee import *
 
 def main():
-    failinfo_id = store()
+    with open("config.json") as f:
+        conf = json.loads(f)
+    failinfo_id = store(conf)
 
 db = MySQLDatabase("failinfo_db", **{"passwd":DB_PASSWD, "host":"localhost", "user": DB_USER})
 class Failinfo(Model):
