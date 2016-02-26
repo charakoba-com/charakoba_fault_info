@@ -43,12 +43,16 @@ def store(conf):
         check_params(form)
         check_api_key(form)
 
+        for key in ["begin", "end"]:
+            if not form["schedule"][key]=="null":
+                form["schedule"][key] = datetime.strptime(form["schedule"][key], DATETIME_FORMAT_STRING)
+
         db.create_table(Failinfo, True)
         with db.transaction():
             info = Failinfo.create(infotype=form["infotype"],
                                    service=form["service"],
-                                   schedule_begin=datetime.strptime(form["schedule"]["begin"], DATETIME_FORMAT_STRING),
-                                   schedule_end=datetime.strptime(form["schedule"]["end"], DATETIME_FORMAT_STRING),
+                                   schedule_begin=form["schedule"]["begin"],
+                                   schedule_end=form["schedule"]["end"],
                                    body=form["body"])
         return ("failinfo_id: " + info.id)
     except BadRequestError as e:
