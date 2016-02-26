@@ -141,7 +141,7 @@ def tweet(conf, info_id):
         data["url"] = "http://charakoba.com/info/?view=" + str(info.id)
 
     twitter = OAuth1Session(conf["CK"], conf["CS"], conf["AT"], conf["AS"])
-    req = twitter.post(URL, params=dict(status=TEMPLATE.format(data)))
+    req = twitter.post(URL, params=dict(status=TEMPLATE.format(**data)))
 
     if req.status_code == 200:
         print("Status: 200 OK\r\n")
