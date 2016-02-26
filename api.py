@@ -45,7 +45,6 @@ def main():
 
 db = MySQLDatabase("failinfo_db", **{"passwd":DB_PASSWD, "host":"localhost", "user": DB_USER})
 class Failinfo(Model):
-    id = IntegerField()
     infotype = CharField()
     service = CharField()
     schedule_begin = DateTimeField(null=True)
