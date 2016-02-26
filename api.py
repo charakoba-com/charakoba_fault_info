@@ -29,7 +29,7 @@ class BadRequestError(Exception):
     def __str__(self):
         return ("Status: 404 Bad Request\r\r\n\n" + self._msg)
 
-def store():
+def store(conf):
     # define constants
     API_KEY = "DBC38B518A83DC98147A132895A4837DF89AB0CDF9F2A57D100D8E1312719EC63309C6055F8880481128B54388472D848AAF945149E1936FB5CC17EFDA0A5193"
     DATETIME_FORMAT_STRING = "%Y-%m-%d %H:%M:%S"
@@ -90,5 +90,5 @@ def store():
         if not form["apikey"]==API_KEY:
             raise BadRequestError("API key is not valid.")
 
-def tweet(info_id):
+def tweet(conf, info_id):
     ...
