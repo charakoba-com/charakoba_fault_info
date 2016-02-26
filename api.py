@@ -121,10 +121,10 @@ def tweet(conf, info_id):
         elif info.infotype=="trouble": data["infotype"] = "障害"
         else: data["infotype"] = info.infotype
 
-        if info.schedule_begin=="null": data["begin"] = "未明"
+        if info.schedule_begin is None: data["begin"] = "未明"
         else: data["begin"] = str(info.schedule_begin)
 
-        if info.schedule_end=="null": data["end"] = "未定"
+        if info.schedule_end is None: data["end"] = "未定"
         else: data["end"] = str(info.schedule_end)
 
         data["service"] = info.service
