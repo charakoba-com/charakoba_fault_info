@@ -59,7 +59,7 @@ class BadRequestError(Exception):
         self._msg = str(msg)
 
     def __str__(self):
-        return ("Status: 404 Bad Request\r\r\n\n" + self._msg)
+        return ("Status: 400 Bad Request\r\r\n\n" + self._msg)
 
 def store(conf):
     # define constants
