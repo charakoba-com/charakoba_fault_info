@@ -6,14 +6,17 @@ from datetime import datetime
 import json
 import os
 from peewee import *
+from requests_oauthlib import OAuth1Session
 
 def main():
     with open("config.json") as f:
         conf = json.loads(f)
     failinfo_id = store(conf)
+    tweet(conf, failinfo_id)
 
 db = MySQLDatabase("failinfo_db", **{"passwd":DB_PASSWD, "host":"localhost", "user": DB_USER})
 class Failinfo(Model):
+    id = IntegerField()
     infotype = CharField()
     service = CharField()
     schedule_begin = DateTimeField()
@@ -99,4 +102,34 @@ def store(conf):
             raise BadRequestError("API key is not valid.")
 
 def tweet(conf, info_id):
-    ...
+    # define constants
+    URL = "https://api.twitter.com/1.1/statuses/update.json"
+    TEMPLATE = "【{infotype}情報】{begin}〜{end}の間に、メンテナンスを行います。影響サービス:{service}。詳細は→{url}"
+    data = dict()
+
+    info = Failinfo.select().where(Failinfo.id==info_id)
+
+    if info.infotype=="maintainance": data["infotype"] = "メンテナンス"
+    elif info.infotype=="trouble": data["infotype"] = "障害"
+    else: data["infotype"] = info.infotype
+
+    if info.schedule_begin=="null": data["begin"] = "未明"
+    else: data["begin"] = str(info.schedule_begin)
+
+    if info.schedule_end=="null": data["end"] = "未定"
+    else: data["end"] = str(info.schedule_end)
+
+    data["service"] = info.service
+    data["url"] = "http://charakoba.com/info/?view=" + info.id
+    twitter = OAuth1Session(conf["CK"], conf["CS"], conf["AT"], conf["AS"])
+    req = twitter.post(URL, params=dict(status=TEMPLATE.format(data)))
+
+    if req.status_code == 200:
+        print("Status: 200 OK\r\n")
+        print("ツイートが完了しました")
+        return True
+    else:
+        print("Status: " + str(req.status_code) + "\r\n")
+        return False
+
+main()
