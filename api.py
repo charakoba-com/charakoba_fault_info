@@ -149,6 +149,7 @@ def get_info():
             info = Failinfo.select().where(Failinfo.id==key)
             print("Content-Type: text/plain\r\n")
             print(info)
+            return True
     else:
         raise BadRequestError('key "view" is required')
 
