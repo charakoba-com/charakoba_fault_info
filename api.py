@@ -18,8 +18,8 @@ DB_USER = "root"
 REQUIREMENT_PARAMS = ["infotype", "service", "schedule", "body", "apikey"]
 
 def main():
-    print("Content-Type: text/plain")
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+    print("Content-Type: text/html")
     if check_method("POST"):
         with open("config.json") as f:
             conf = json.load(f)
