@@ -124,20 +124,21 @@ def tweet(conf, info_id):
     TEMPLATE = "【{infotype}情報】{begin}〜{end}の間に、メンテナンスを行います。影響サービス:{service}。詳細は→{url}"
     data = dict()
 
-    info = Failinfo.select().where(Failinfo.id==info_id)
+    query = Failinfo.select().where(Failinfo.id==info_id)
+    for info in query:
+        if info.infotype=="maintainance": data["infotype"] = "メンテナンス"
+        elif info.infotype=="trouble": data["infotype"] = "障害"
+        else: data["infotype"] = info.infotype
 
-    if info.infotype=="maintainance": data["infotype"] = "メンテナンス"
-    elif info.infotype=="trouble": data["infotype"] = "障害"
-    else: data["infotype"] = info.infotype
+        if info.schedule_begin=="null": data["begin"] = "未明"
+        else: data["begin"] = str(info.schedule_begin)
 
-    if info.schedule_begin=="null": data["begin"] = "未明"
-    else: data["begin"] = str(info.schedule_begin)
+        if info.schedule_end=="null": data["end"] = "未定"
+        else: data["end"] = str(info.schedule_end)
 
-    if info.schedule_end=="null": data["end"] = "未定"
-    else: data["end"] = str(info.schedule_end)
+        data["service"] = info.service
+        data["url"] = "http://charakoba.com/info/?view=" + info.id
 
-    data["service"] = info.service
-    data["url"] = "http://charakoba.com/info/?view=" + info.id
     twitter = OAuth1Session(conf["CK"], conf["CS"], conf["AT"], conf["AS"])
     req = twitter.post(URL, params=dict(status=TEMPLATE.format(data)))
 
