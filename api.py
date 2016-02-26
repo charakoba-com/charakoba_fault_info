@@ -24,17 +24,7 @@ def main():
         tweet(conf, failinfo_id)
     elif check_method("GET"):
         try:
-            form = cgi.FieldStorage()
-            if "view" in form:
-                if form["view"]=="null":
-                    info = Failinfo.select()
-                else:
-                    key = int(form["view"])
-                    info = Failinfo.select().where(Failinfo.id==key)
-                print("Content-Type: text/plain\r\n")
-                print(info)
-            else:
-                raise BadRequestError('key "view" is required')
+            get_info()
         except BadRequestError as e:
             print(str(e))
             quit()
@@ -150,6 +140,19 @@ def tweet(conf, info_id):
     else:
         print("Status: " + str(req.status_code) + "\r\n")
         return False
+
+def get_info():
+    form = cgi.FieldStorage()
+    if "view" in form:
+        if form["view"].value=="null":
+            info = Failinfo.select()
+        else:
+            key = int(form["view"].value)
+            info = Failinfo.select().where(Failinfo.id==key)
+            print("Content-Type: text/plain\r\n")
+            print(info)
+    else:
+        raise BadRequestError('key "view" is required')
 
 def check_method(method):
     if os.environ['REQUEST_METHOD'] == method:
