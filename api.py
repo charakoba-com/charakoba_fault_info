@@ -19,7 +19,7 @@ def main():
     print("Content-Type: text/plain")
     if check_method("POST"):
         with open("config.json") as f:
-            conf = json.loads(f)
+            conf = json.load(f)
         failinfo_id = store(conf)
         tweet(conf, failinfo_id)
     elif check_method("GET"):
