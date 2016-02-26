@@ -50,7 +50,7 @@ class Failinfo(Model):
     schedule_begin = DateTimeField(null=True)
     schedule_end = DateTimeField(null=True)
     body = CharField()
-    end = BoolField()
+    end = BooleanField()
     created_date = DateTimeField()
     class Meta:
         database = db
