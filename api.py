@@ -141,16 +141,26 @@ def tweet(conf, info_id):
         return False
 
 def get_info():
+    htmlhead = '<html><head><title>Server-info</title><style>table{margin:1em;} td {border: 1px solid black;padding:.5em;}</style></head><body><h1>Server-info[charakoba.com]<table><tr><th>INFOTYPE</th><th>SERVICE</th><th>BEGIN</th><th>END</th><th>DESCRIPTION</th></tr>'
+    htmlclose = '</table></body></html>'
+    TR = "<tr><td>{infotype}</td><td>{service}</td><td>{begin}</td><td>{end}</td><td>{body}</td></tr>"
     form = cgi.FieldStorage()
     if "view" in form:
         if form["view"].value=="null":
-            info = Failinfo.select()
+            query = Failinfo.select()
         else:
             key = int(form["view"].value)
-            info = Failinfo.select().where(Failinfo.id==key)
-            print("Content-Type: text/plain\r\n")
-            print(info)
-            return True
+            query = Failinfo.select().where(Failinfo.id==key)
+        print("\r\n" + htmlhead)
+        for info in query:
+            data = dict(infotype=str(convert_infotype(info.infotype)),
+                        service=str(info.service),
+                        begin=str(info.schedule_begin),
+                        end=str(info.schedule_end),
+                        body=str(info.body))
+            print(TR.format(**data))
+        print(htmlclose)
+        return True
     else:
         raise BadRequestError('key "view" is required')
 
