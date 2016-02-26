@@ -75,14 +75,35 @@ def store(conf):
 
         db.create_table(Failinfo, True)
         with db.transaction():
-            info = Failinfo.create(infotype=form["infotype"],
-                                   service=form["service"],
-                                   schedule_begin=form["schedule"]["begin"],
-                                   schedule_end=form["schedule"]["end"],
-                                   body=form["body"],
-                                   end=False,
-                                   created_date=datetime.now())
-        return ("failinfo_id: " + info.id)
+            be = (form["schedule"]["begin"]!="null", form["schedule"]["end"]!="null")
+            if be == (False, False):
+                info = Failinfo.create(infotype=form["infotype"],
+                                       service=form["service"],
+                                       body=form["body"],
+                                       end=False,
+                                       created_date=datetime.now())
+            elif be == (True, False):
+                info = Failinfo.create(infotype=form["infotype"],
+                                       service=form["service"],
+                                       schedule_begin=form["schedule"]["begin"],
+                                       body=form["body"],
+                                       end=False,
+                                       created_date=datetime.now())
+            elif be == (False, True):
+                info = Failinfo.create(infotype=form["infotype"],
+                                       service=form["service"],
+                                       schedule_end=form["schedule"]["end"],
+                                       body=form["body"],
+                                       end=False,
+                                       created_date=datetime.now())
+            else:
+                info = Failinfo.create(infotype=form["infotype"],
+                                       service=form["service"],
+                                       schedule_begin=form["schedule"]["begin"],
+                                       schedule_end=form["schedule"]["end"],
+                                       body=form["body"],
+                                       end=False,
+                                       created_date=datetime.now())
         return info.id
     except BadRequestError as e:
         print(str(e))
