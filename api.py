@@ -19,6 +19,8 @@ class Failinfo(Model):
     schedule_begin = DateTimeField()
     schedule_end = DateTimeField()
     body = CharField()
+    end = BoolField()
+    created_date = DateTimeField()
     class Meta:
         database = db
 
