@@ -9,10 +9,19 @@ from peewee import *
 from requests_oauthlib import OAuth1Session
 
 def main():
-    with open("config.json") as f:
-        conf = json.loads(f)
-    failinfo_id = store(conf)
-    tweet(conf, failinfo_id)
+    if check_method("POST"):
+        with open("config.json") as f:
+            conf = json.loads(f)
+        failinfo_id = store(conf)
+        tweet(conf, failinfo_id)
+    elif check_method("GET"):
+        ...
+
+    def check_method(method):
+        if os.environ['REQUEST_METHOD'] == method:
+            return True
+        else:
+            return False
 
 db = MySQLDatabase("failinfo_db", **{"passwd":DB_PASSWD, "host":"localhost", "user": DB_USER})
 class Failinfo(Model):
@@ -43,7 +52,6 @@ def store(conf):
     REQUIREMENT_PARAMS = ["infotype", "service", "schedule", "body", "apikey"]
 
     try:
-        check_method("POST")
         form = get_formdata()
         check_params(form)
         check_api_key(form)
@@ -80,11 +88,6 @@ def store(conf):
             return json.loads(form["data"].value)
         else:
             raise BadRequestError('form data does not have body that named "data"')
-
-    def check_method(method):
-        if not os.environ['REQUEST_METHOD']==method:
-            raise BadRequestError("This API accepts {} method only".format(method))
-        return True
 
     def check_params(form):
         for requirement in REQUIREMENT_PARAMS:
