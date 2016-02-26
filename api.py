@@ -145,7 +145,7 @@ def tweet(conf, info_id):
 
     if req.status_code == 200:
         print("Status: 200 OK\r\n")
-        print("ツイートが完了しました")
+        print("Complete.")
         return True
     else:
         print("Status: " + str(req.status_code) + "\r\n")
