@@ -3,10 +3,12 @@
 
 import cgi
 from datetime import datetime
+import io
 import json
 import os
 from peewee import *
 from requests_oauthlib import OAuth1Session
+import sys
 
 # define constants
 API_KEY = "DBC38B518A83DC98147A132895A4837DF89AB0CDF9F2A57D100D8E1312719EC63309C6055F8880481128B54388472D848AAF945149E1936FB5CC17EFDA0A5193"
@@ -17,6 +19,7 @@ REQUIREMENT_PARAMS = ["infotype", "service", "schedule", "body", "apikey"]
 
 def main():
     print("Content-Type: text/plain")
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
     if check_method("POST"):
         with open("config.json") as f:
             conf = json.load(f)
