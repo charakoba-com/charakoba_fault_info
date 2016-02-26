@@ -1,0 +1,9 @@
+{
+    "apikey": "API key you like. If you do not want to think it, run with python CODE==> ''.join([''.join([c for c in str(uuid4()) if c!='-']) for i in range(6)]) <==END",
+    "twitter":{
+        "CK": "Consumer Key",
+        "CS": "Consumer Secret",
+        "AT": "Access Token",
+        "AS": "Access Secret"
+    }
+}
