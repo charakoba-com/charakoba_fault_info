@@ -123,6 +123,7 @@ def tweet(conf, info_id):
     URL = "https://api.twitter.com/1.1/statuses/update.json"
     TEMPLATE = "【{infotype}情報】{begin}〜{end}の間に、メンテナンスを行います。影響サービス:{service}。詳細は→{url}"
     data = dict()
+    conf = conf["twitter"]
 
     query = Failinfo.select().where(Failinfo.id==info_id)
     for info in query:
