@@ -106,8 +106,6 @@ def store(conf):
         db.rollback()
         quit()
 
-
-
 def tweet(conf, info_id):
     # define constants
     URL = "https://api.twitter.com/1.1/statuses/update.json"
