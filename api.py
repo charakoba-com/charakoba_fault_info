@@ -15,7 +15,25 @@ def main():
         failinfo_id = store(conf)
         tweet(conf, failinfo_id)
     elif check_method("GET"):
-        ...
+        try:
+            form = cgi.FieldStorage()
+            if "view" in form:
+                if form["view"]=="null":
+                    info = Failinfo.select()
+                else:
+                    key = int(form["view"])
+                    info = Failinfo.select().where(Failinfo.id==key)
+                print("Content-Type: text/plain\r\n")
+                print(info)
+            else:
+                raise BadRequestError('key "view" is required')
+        except BadRequestError as e:
+            print(str(e))
+            quit()
+        except ValueError:
+            print("Status: 400 Bad Request\r\n")
+            print('key "view" should be integer')
+            quit()
 
     def check_method(method):
         if os.environ['REQUEST_METHOD'] == method:
