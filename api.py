@@ -83,6 +83,7 @@ def store(conf):
                                    end=False,
                                    created_date=datetime.now())
         return ("failinfo_id: " + info.id)
+        return info.id
     except BadRequestError as e:
         print(str(e))
         quit()
