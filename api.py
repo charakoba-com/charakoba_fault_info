@@ -11,7 +11,6 @@ from requests_oauthlib import OAuth1Session
 import sys
 
 # define constants
-API_KEY = "DBC38B518A83DC98147A132895A4837DF89AB0CDF9F2A57D100D8E1312719EC63309C6055F8880481128B54388472D848AAF945149E1936FB5CC17EFDA0A5193"
 DATETIME_FORMAT_STRING = "%Y-%m-%d %H:%M:%S"
 DB_PASSWD = ""
 DB_USER = "root"
@@ -188,8 +187,8 @@ def check_params(form):
             raise BadRequestError('"begin" and "end" parameters are required in schedule')
     return True
 
-def check_api_key(form):
-    if not form["apikey"]==API_KEY:
+def check_api_key(conf, form):
+    if not form["apikey"]==conf["apikey"]:
         raise BadRequestError("API key is not valid.")
 
 def convert_infotype(infotype):
