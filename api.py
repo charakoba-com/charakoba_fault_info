@@ -23,37 +23,73 @@ class Failinfo(Model):
     class Meta:
         database = db
 
-if not os.environ['REQUEST_METHOD']=="POST":
-    print("Status: 400 Bad Request\r\n")
-    print("This API accepts only POST Method.")
-    quit()
+class BadRequestError(Exception):
+    def __init__(self, msg):
+        self._msg = str(msg)
 
-form = json.loads(cgi.FieldStorage()["data"].value)
-for requirement in requirement_params:
-    if not requirement in form:
-        print("Status: 400 Bad Request\r\n")
-        print(requirement + " parameter is required")
+    def __str__(self):
+        return ("Status: 404 Bad Request\r\r\n\n" + self._msg)
+
+def store():
+    # define constants
+    API_KEY = "DBC38B518A83DC98147A132895A4837DF89AB0CDF9F2A57D100D8E1312719EC63309C6055F8880481128B54388472D848AAF945149E1936FB5CC17EFDA0A5193"
+    DATETIME_FORMAT_STRING = "%Y-%m-%d %H:%M:%S"
+    DB_PASSWD = ""
+    DB_USER = "root"
+    REQUIREMENT_PARAMS = ["infotype", "service", "schedule", "body", "apikey"]
+
+    try:
+        check_method("POST")
+        form = get_formdata()
+        check_params(form)
+        check_api_key(form)
+
+        db.create_table(Failinfo, True)
+        with db.transaction():
+            info = Failinfo.create(infotype=form["infotype"],
+                                   service=form["service"],
+                                   schedule_begin=datetime.strptime(form["schedule"]["begin"], DATETIME_FORMAT_STRING),
+                                   schedule_end=datetime.strptime(form["schedule"]["end"], DATETIME_FORMAT_STRING),
+                                   body=form["body"])
+        return ("failinfo_id: " + info.id)
+    except BadRequestError as e:
+        print(str(e))
         quit()
-    if requirement=="schedule":
-        if not "begin" in form["schedule"] or not "end" in form["schedule"]:
-            print("Status: 400 Bad Request\r\n")
-            print('"begin" and "end" parameters are required in schedule')
-            quit()
+    except Exception as e:
+        print("Status: 500 Internal ServerError\r\n")
+        print("An Error occured")
+        print("================")
+        print(str(e))
+        print("================")
+        db.rollback()
+        quit()
 
-if not form["apikey"]==API_KEY:
-    print("Status: 400 Bad Request\r\n")
-    print("API key is not valid.")
-    quit()
+    def get_formdata():
+        form = cgi.FieldStorage()
+        if "data" in form:
+            return json.loads(form["data"].value)
+        else:
+            raise BadRequestError('form data does not have body that named "data"')
 
-try:
-    db.create_table(Failinfo, True)
-    with db.transaction():
-        info = Failinfo.create(infotype=form["infotype"], service=form["service"], schedule_begin=datetime.strptime(form["schedule"]["begin"], DATETIME_FORMAT_STRING), schedule_end=datetime.strptime(form["schedule"]["end"], DATETIME_FORMAT_STRING), body=form["body"])
-except:
-    print("Status: 500 Internal ServerError\r\n")
-    print("An Error occured")
-    db.rollback()
-    quit()
+    def check_method(method):
+        if not os.environ['REQUEST_METHOD']==method:
+            raise BadRequestError("This API accepts {} method only".format(method))
+        return True
 
-print("Status: 201 Created\r\n")
-print("failinfo_id: " + info.id)
+    def check_params(form):
+        for requirement in REQUIREMENT_PARAMS:
+            if not requirement in form:
+                raise BadRequestError(requirement + " parameter is required")
+            if requirement=="schedule":
+                if not type(form["schedule"])==dict:
+                    raise BadRequestError('"schedule" parameter should be object(dict) that has parameters "begin" and "end"')
+                if not "begin" in form["schedule"] or not "end" in form["schedule"]:
+                    raise BadRequestError('"begin" and "end" parameters are required in schedule')
+        return True
+
+    def check_api_key(form):
+        if not form["apikey"]==API_KEY:
+            raise BadRequestError("API key is not valid.")
+
+def tweet(info_id):
+    ...
