@@ -8,6 +8,13 @@ import os
 from peewee import *
 from requests_oauthlib import OAuth1Session
 
+# define constants
+API_KEY = "DBC38B518A83DC98147A132895A4837DF89AB0CDF9F2A57D100D8E1312719EC63309C6055F8880481128B54388472D848AAF945149E1936FB5CC17EFDA0A5193"
+DATETIME_FORMAT_STRING = "%Y-%m-%d %H:%M:%S"
+DB_PASSWD = ""
+DB_USER = "root"
+REQUIREMENT_PARAMS = ["infotype", "service", "schedule", "body", "apikey"]
+
 def main():
     print("Content-Type: text/plain")
     if check_method("POST"):
@@ -36,12 +43,6 @@ def main():
             print('key "view" should be integer')
             quit()
 
-    def check_method(method):
-        if os.environ['REQUEST_METHOD'] == method:
-            return True
-        else:
-            return False
-
 db = MySQLDatabase("failinfo_db", **{"passwd":DB_PASSWD, "host":"localhost", "user": DB_USER})
 class Failinfo(Model):
     id = IntegerField()
@@ -63,13 +64,6 @@ class BadRequestError(Exception):
         return ("Status: 400 Bad Request\r\r\n\n" + self._msg)
 
 def store(conf):
-    # define constants
-    API_KEY = "DBC38B518A83DC98147A132895A4837DF89AB0CDF9F2A57D100D8E1312719EC63309C6055F8880481128B54388472D848AAF945149E1936FB5CC17EFDA0A5193"
-    DATETIME_FORMAT_STRING = "%Y-%m-%d %H:%M:%S"
-    DB_PASSWD = ""
-    DB_USER = "root"
-    REQUIREMENT_PARAMS = ["infotype", "service", "schedule", "body", "apikey"]
-
     try:
         form = get_formdata()
         check_params(form)
@@ -101,27 +95,7 @@ def store(conf):
         db.rollback()
         quit()
 
-    def get_formdata():
-        form = cgi.FieldStorage()
-        if "data" in form:
-            return json.loads(form["data"].value)
-        else:
-            raise BadRequestError('form data does not have body that named "data"')
 
-    def check_params(form):
-        for requirement in REQUIREMENT_PARAMS:
-            if not requirement in form:
-                raise BadRequestError(requirement + " parameter is required")
-            if requirement=="schedule":
-                if not type(form["schedule"])==dict:
-                    raise BadRequestError('"schedule" parameter should be object(dict) that has parameters "begin" and "end"')
-                if not "begin" in form["schedule"] or not "end" in form["schedule"]:
-                    raise BadRequestError('"begin" and "end" parameters are required in schedule')
-        return True
-
-    def check_api_key(form):
-        if not form["apikey"]==API_KEY:
-            raise BadRequestError("API key is not valid.")
 
 def tweet(conf, info_id):
     # define constants
@@ -153,5 +127,33 @@ def tweet(conf, info_id):
     else:
         print("Status: " + str(req.status_code) + "\r\n")
         return False
+
+def check_method(method):
+    if os.environ['REQUEST_METHOD'] == method:
+        return True
+    else:
+        return False
+
+def get_formdata():
+    form = cgi.FieldStorage()
+    if "data" in form:
+        return json.loads(form["data"].value)
+    else:
+        raise BadRequestError('form data does not have body that named "data"')
+
+def check_params(form):
+    for requirement in REQUIREMENT_PARAMS:
+        if not requirement in form:
+            raise BadRequestError(requirement + " parameter is required")
+    if requirement=="schedule":
+        if not type(form["schedule"])==dict:
+            raise BadRequestError('"schedule" parameter should be object(dict) that has parameters "begin" and "end"')
+        if not "begin" in form["schedule"] or not "end" in form["schedule"]:
+            raise BadRequestError('"begin" and "end" parameters are required in schedule')
+    return True
+
+def check_api_key(form):
+    if not form["apikey"]==API_KEY:
+        raise BadRequestError("API key is not valid.")
 
 main()
