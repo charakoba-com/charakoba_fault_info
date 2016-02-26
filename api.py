@@ -118,9 +118,7 @@ def tweet(conf, info_id):
 
     query = Failinfo.select().where(Failinfo.id==info_id)
     for info in query:
-        if info.infotype=="maintainance": data["infotype"] = "メンテナンス"
-        elif info.infotype=="trouble": data["infotype"] = "障害"
-        else: data["infotype"] = info.infotype
+        data["infotype"] = convert_infotype(info.infotype)
 
         if info.schedule_begin is None: data["begin"] = "未明"
         else: data["begin"] = str(info.schedule_begin)
@@ -183,5 +181,10 @@ def check_params(form):
 def check_api_key(form):
     if not form["apikey"]==API_KEY:
         raise BadRequestError("API key is not valid.")
+
+def convert_infotype(infotype):
+    if infotype=="maintainance": return "メンテナンス"
+    elif infotype=="trouble": return "障害"
+    return infotype
 
 main()
