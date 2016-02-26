@@ -138,7 +138,7 @@ def tweet(conf, info_id):
         else: data["end"] = str(info.schedule_end)
 
         data["service"] = info.service
-        data["url"] = "http://charakoba.com/info/?view=" + str(info.id)
+        data["url"] = "http://charakoba.com/info/api.py?view=" + str(info.id)
 
     twitter = OAuth1Session(conf["CK"], conf["CS"], conf["AT"], conf["AS"])
     req = twitter.post(URL, params=dict(status=TEMPLATE.format(**data)))
