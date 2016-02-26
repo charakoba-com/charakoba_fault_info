@@ -55,7 +55,9 @@ def store(conf):
                                    service=form["service"],
                                    schedule_begin=form["schedule"]["begin"],
                                    schedule_end=form["schedule"]["end"],
-                                   body=form["body"])
+                                   body=form["body"],
+                                   end=False,
+                                   created_date=datetime.now())
         return ("failinfo_id: " + info.id)
     except BadRequestError as e:
         print(str(e))
