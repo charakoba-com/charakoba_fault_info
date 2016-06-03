@@ -207,7 +207,11 @@ def api_get_info():
     response = HTTPResponse()
     all_ = request.query.get(all)
     if all_ in ['1', 'True', 'true']:
-        response.body = json.dumps(get_all_info())
+        rows = get_all_info()
+        bd = []
+        for row in rows:
+            bd.append(row)
+        response.body = json.dumps(bd)
     else:
         response.body = json.dumps(get_info(request.query.get('issue')))
     return response
