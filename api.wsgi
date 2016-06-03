@@ -215,5 +215,6 @@ def api_get_info():
             bd.append(row)
         response.body = json.dumps(bd)
     else:
-        response.body = json.dumps(get_info(request.query.get('issue')))
+        row = get_info(request.query.get('issue'))
+        response.body = json.dumps(row)
     return response
