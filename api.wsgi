@@ -213,7 +213,7 @@ def api_post_info():
 @get('/api')
 def api_get_info():
     response = HTTPResponse()
-    all_ = request.query.get(all)
+    all_ = request.query.get('all')
     if all_ in ['1', 'True', 'true']:
         rows = get_all_info()
         response.body = json.dumps(rows, default=default_datetime_format) + "\n"
