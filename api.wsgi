@@ -9,7 +9,8 @@ from MySQLdb.cursors import DictCursor
 import requests
 from requests_oauthlib import OAuth1Session as OAuth
 
-with open('config.json', 'r') as f:
+configfile = os.path.join(os.path.dirname(__file__), 'config.json')
+with open(configfile, 'r') as f:
     cfg = json.load(f)
 
 verb = {
