@@ -185,6 +185,12 @@ def tweet(status):
         return False
 
 
+def default_datetime_format(o):
+    if isinstance(o, datetime):
+        return o.strftime('%Y/%m/%d %H:%M:%S')
+    raise TypeError(repr(o) + " is not JSON serializable")
+
+
 @post('/api')
 def api_post_info():
     required_key = ['type', 'service', 'begin']
@@ -213,8 +219,8 @@ def api_get_info():
         bd = []
         for row in rows:
             bd.append(row)
-        response.body = json.dumps(bd)
+        response.body = json.dumps(bd, default=default_datetime_format)
     else:
         row = get_info(request.query.get('issue'))
-        response.body = json.dumps(row)
+        response.body = json.dumps(row, default=default_datetime_format)
     return response
