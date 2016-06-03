@@ -29,7 +29,7 @@ class RequireNotSatisfiedError(Exception):
 
 def require(keys):
     params = {}
-    for key in ar:
+    for key in keys:
         value = request.forms.get(key)
         if value is not None:
             params[key] = value
