@@ -174,7 +174,7 @@ def tweet(status):
 
 
 @post('/api')
-def post_info():
+def api_post_info():
     required = ['type', 'service', 'begin']
     optional = ['end', 'detail']
     try:
@@ -193,7 +193,7 @@ def post_info():
 
 
 @get('/api')
-def get_info():
+def api_get_info():
     response = HTTPResponse()
     if request.query.get(all):
         response.body = json.dumps(get_info())
