@@ -36,6 +36,7 @@ def require(keys):
             params[key] = value
         else:
             raise RequireNotSatisfiedError(key)
+    return params
 
 
 def optional(keys):
