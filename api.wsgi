@@ -104,6 +104,16 @@ def get_info(id_):
         row = cursor.fetchone()
         return row
 
+def get_all_info():
+    with MySQLdb.connect(
+            cursorclass=DictCursor,
+            **cfg['DB_INFO']) as cursor:
+        cursor.execute(
+            '''SELECT * FROM fault_info_log'''
+        )
+        rows = cursor.fetchall()
+        return rows
+
 
 def get_uri(id_):
     uri = (
@@ -195,8 +205,9 @@ def api_post_info():
 @get('/api')
 def api_get_info():
     response = HTTPResponse()
-    if request.query.get(all):
-        response.body = json.dumps(get_info())
+    all_ = request.query.get(all)
+    if all_ in ['1', 'True', 'true']:
+        response.body = json.dumps(get_all_info())
     else:
         response.body = json.dumps(get_info(request.query.get('issue')))
     return response
