@@ -187,13 +187,13 @@ def tweet(status):
 
 @post('/api')
 def api_post_info():
-    required = ['type', 'service', 'begin']
-    optional = ['end', 'detail']
+    required_key = ['type', 'service', 'begin']
+    optional_key = ['end', 'detail']
     try:
-        params = require(required)
+        params = require(required_key)
     except RequireNotSatisfiedError as e:
             return badRequest(e.message)
-    params.update(optional(optional))
+    params.update(optional(optional_key))
     try:
         id_ = save(params)['id']
     except:
