@@ -111,10 +111,21 @@ def get_all_info():
             cursorclass=DictCursor,
             **cfg['DB_INFO']) as cursor:
         cursor.execute(
-            '''SELECT * FROM fault_info_log'''
+            '''SELECT * FROM fault_info_log;'''
         )
         rows = cursor.fetchall()
         return rows
+
+
+def get_latest_info():
+    with MySQLdb.connect(
+            cursorclass=DictCursor,
+            **cfg['DB_INFO']) as cursor:
+        cursor.execute(
+            '''SELECT * FROM fault_info_log
+            ORDER BY id
+
+            ''')
 
 
 def get_uri(id_):
