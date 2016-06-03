@@ -1,5 +1,5 @@
 {
-    "BASE_URI": ""
+    "BASE_URI": "",
     "DB_INFO": {
         "host": "localhost",
         "user": "",
