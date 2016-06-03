@@ -104,7 +104,7 @@ def get_info(id_):
             (id_,)
         )
         row = cursor.fetchone()
-        return row
+    return row
 
 def get_all_info():
     with MySQLdb.connect(
