@@ -23,6 +23,7 @@ application = Bottle()
 post = application.post
 get = application.get
 
+
 class RequireNotSatisfiedError(Exception):
     pass
 
@@ -44,7 +45,7 @@ def optional(keys):
     return params
 
 
-def badrequest(key):
+def badRequest(key):
     response = HTTPResponse()
     response.status = 400
     response.body = json.dumps(
