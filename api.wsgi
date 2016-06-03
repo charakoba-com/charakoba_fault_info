@@ -24,10 +24,6 @@ post = application.post
 get = application.get
 
 
-class NoSuchRecordError(Exception):
-    pass
-
-
 class RequireNotSatisfiedError(Exception):
     pass
 
@@ -109,7 +105,7 @@ def get_info(id_):
         )
         row = cursor.fetchone()
     if not row:
-        raise NoSuchRecordError
+        row = {"":""}
     return row
 
 def get_all_info():
