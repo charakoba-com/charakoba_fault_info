@@ -123,9 +123,11 @@ def get_latest_info():
             **cfg['DB_INFO']) as cursor:
         cursor.execute(
             '''SELECT * FROM fault_info_log
-            ORDER BY id
-
+            ORDER BY id DESC
+            limit 1;
             ''')
+        row = cursor.fetchone()
+        return row
 
 
 def get_uri(id_):
@@ -225,10 +227,14 @@ def api_post_info():
 def api_get_info():
     response = HTTPResponse()
     all_ = request.query.get('all')
+    issue = request.query.get('issue')
     if all_ in ['1', 'True', 'true']:
         rows = get_all_info()
         response.body = json.dumps(rows, default=default_datetime_format) + "\n"
+    elif issue is not None:
+        row = get_info(issue)
+        response.body = json.dumps(row, default=default_datetime_format) + "\n"
     else:
-        row = get_info(request.query.get('issue'))
+        row = get_latest_info()
         response.body = json.dumps(row, default=default_datetime_format) + "\n"
     return response
