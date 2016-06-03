@@ -216,10 +216,7 @@ def api_get_info():
     all_ = request.query.get(all)
     if all_ in ['1', 'True', 'true']:
         rows = get_all_info()
-        bd = []
-        for row in rows:
-            bd.append(row)
-        response.body = json.dumps(bd, default=default_datetime_format)
+        response.body = json.dumps(rows, default=default_datetime_format)
     else:
         row = get_info(request.query.get('issue'))
         response.body = json.dumps(row, default=default_datetime_format)
