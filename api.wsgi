@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
-from bottle import request, HTTPResponse, post, get
+from bottle import Bottle, request, HTTPResponse
 from datetime import datetime
 import json
 import MySQLdb
@@ -19,6 +19,9 @@ verb = {
     'event': '障害が発生しました'
 }
 
+application = Bottle()
+post = application.post
+get = application.get
 
 class RequireNotSatisfiedError(Exception):
     pass
