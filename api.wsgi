@@ -105,8 +105,9 @@ def get_info(id_):
         )
         row = cursor.fetchone()
     if not row:
-        row = {"":""}
+        row = {"": ""}
     return row
+
 
 def get_all_info():
     with MySQLdb.connect(
@@ -159,8 +160,8 @@ def get_status(info):
 
 def save(params):
     with MySQLdb.connect(
-        cursorclass=DictCursor,
-        **cfg['DB_INFO']) as cursor:
+            cursorclass=DictCursor,
+            **cfg['DB_INFO']) as cursor:
         cursor.execute(
             '''INSERT INTO fault_info_log
             (type, service, begin, end, detail)
@@ -232,11 +233,20 @@ def api_get_info():
     issue = request.query.get('issue')
     if all_ in ['1', 'True', 'true']:
         rows = get_all_info()
-        response.body = json.dumps(rows, default=default_datetime_format) + "\n"
+        response.body = json.dumps(
+            rows,
+            default=default_datetime_format
+        ) + "\n"
     elif issue is not None:
         row = get_info(issue)
-        response.body = json.dumps(row, default=default_datetime_format) + "\n"
+        response.body = json.dumps(
+            row,
+            default=default_datetime_format
+        ) + "\n"
     else:
         row = get_latest_info()
-        response.body = json.dumps(row, default=default_datetime_format) + "\n"
+        response.body = json.dumps(
+            row,
+            default=default_datetime_format
+        ) + "\n"
     return response
