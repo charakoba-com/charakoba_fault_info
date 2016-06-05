@@ -1,22 +1,44 @@
 # charakoba_fault_info
 
-## HOW TO USE
-1. configure with config file :: set your tokens of twitter api to configsample.json, and set API KEY of this script.
-then, rename configsample.json to config.json.
-1. configure in api.py :: set your mysql username and password in api.py. you can find it where next to import statements, "# define constants"
-1. make database :: make database with mysql, which named "faultinfo_db"
-1. setup :: set api.py, config.json to your cgi-runnable dir. chmod 755 api.py and use it.
+# 使い方
+## 環境
+Python 2.xとWSGIの環境で動作します。動作テストはapache + mod_wsgiで行っています。
 
-## API
+## 設定
+config.json.defaultをconfig.jsonというファイルにコピーして、中の空欄を埋めてください。それぞれの設定項目の意味は以下です。
+| 名前 | 意味 | 例 |
+| BASE_URI | ルートまでのアドレス | "http://hoge.example.com/" |
+| DB_INFO | MySQL データベースの情報 |
+| TWITTER_INFO | twitter REST APIの情報 |
 
-| METHOD |              REQUIRED PARAMS              |         DESCRIPTION        |
-|:------:|:-----------------------------------------:|:--------------------------:|
-|  POST  | infotype, service, schedule, body, apikey | save to database and tweet |
-|  GET   | view                                      | show record                |
+## エンドポイント
+### POST /api
+障害情報をデータベースに保存し、ツイートを行います。
 
-### save to database and tweet
-need REQUIRED PARAMS with json named "data"
+#### リソース情報
+| レスポンス形式 | JSON |
 
-### show record
-need REQUIRED PARAM with query string
-if you set view=null, show all record
+#### 必須パラメータ
+| パラメータ名 | 意味                                       |
+|:------------:|:------------------------------------------:|
+| type         | 障害(event)・メンテナンス(maintenance)の別 |
+| service      | 影響サービス                               |
+| begin        | 障害発生/メンテナンス開始の時刻            |
+
+#### オプションパラメータ
+| パラメータ名 | 意味                            |
+|:------------:|:-------------------------------:|
+| end          | 障害解決/メンテナンス終了の時刻 |
+| detail       | 障害/メンテナンスの詳細         |
+
+### GET /api
+障害情報を取得します。
+
+#### リソース情報
+| レスポンス形式 | JSON |
+
+#### オプションパラメータ
+| パラメータ名 | 意味                                                            |
+|:------------:|:---------------------------------------------------------------:|
+| all          | (1 or true orTrue)で全件取得。デフォルトは(0 or false or False) |
+| issue        | レコードid(指定しなければlatestを取得)                          |
