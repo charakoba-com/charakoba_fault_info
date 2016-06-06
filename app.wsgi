@@ -31,7 +31,7 @@ def detail(id_):
 
 @get('/statics/<filename:path>')
 def static(filename):
-    return static_file(filename, root='statics')
+    return static_file(filename, root='./statics')
 
 if __name__ == '__main__':
     application.run(host='localhost', port=8080, debug=True, reloader=True)
