@@ -27,10 +27,10 @@ get = application.get
 def RequireNotSatisfiedError(key):
     res = HTTPResponse()
     res.status = 400
-    res.body = {
+    res.body = json.dumps({
         "message": "Requirements not satisfied.",
         "key": key
-    }
+    }) + "\n"
     return res
 
 
