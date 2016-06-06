@@ -20,7 +20,7 @@ application.mount('/api', api.application)
 @get('/')
 @view('statics/template/index.tpl')
 def index():
-    return {"infos": api.get_all_info(), "url": url}
+    return {"infos": api.get_all_info()}
 
 
 @get('/detail/<id_:int>/')
