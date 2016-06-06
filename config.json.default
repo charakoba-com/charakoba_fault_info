@@ -1,5 +1,6 @@
 {
     "BASE_URI": "",
+    "API_KEY": "",
     "DB_INFO": {
         "host": "localhost",
         "user": "",

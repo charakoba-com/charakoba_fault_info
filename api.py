@@ -48,6 +48,17 @@ def optional(keys):
     return params
 
 
+def apikeyNotValid():
+    response = HTTPResponse()
+    response.status = 400
+    response.body = json.dumps(
+        {
+            'message': 'api key not valid',
+        }
+    ) + "\n"
+    return response
+
+
 def badRequest(key):
     response = HTTPResponse()
     response.status = 400
@@ -230,13 +241,15 @@ def update(id_, params):
 
 @post('/')
 def api_post_info():
-    required_key = ['type', 'service', 'begin']
+    required_key = ['type', 'service', 'begin', 'apikey']
     optional_key = ['end', 'detail']
     try:
         params = require(required_key)
     except RequireNotSatisfiedError as e:
         return badRequest(e.message)
     params.update(optional(optional_key))
+    if params['apikey'] != cfg['API_KEY']:
+        return apikeyNotValid()
     try:
         id_ = save(params)['id']
     except:
