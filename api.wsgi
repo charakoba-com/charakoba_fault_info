@@ -218,7 +218,7 @@ def api_post_info():
     try:
         id_ = save(params)['id']
     except:
-        return cannnotSave()
+        return cannotSave()
     if tweet(get_status(get_info(id_))):
         return success()
     else:
