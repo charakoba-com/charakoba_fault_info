@@ -25,7 +25,7 @@ get = application.get
 
 debug = True
 
-class RequireNotSatisfiedError(object):
+class RequireNotSatisfiedError(Exception):
     pass
 
 
