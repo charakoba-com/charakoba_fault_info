@@ -6,7 +6,7 @@
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="{{url('static_file', filepath="css/materialize.min.css")}}"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="static_file/css/materialize.min.css"  media="screen,projection"/>
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="statics/js/materialize.min.js"></script>

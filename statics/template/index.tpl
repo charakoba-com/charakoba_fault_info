@@ -29,7 +29,7 @@
             <div class="card-content green-text text-darken-4">
               <span class="card-title">{{ info.type }} :: {{ info.service }}</span>
               <p>
-                {{ info.begin }} - {{ info.end }}
+                {{ info.begin }} - {{ info.end or '' }}
               </p>
             </div>
             <div class="card-action">
