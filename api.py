@@ -50,7 +50,7 @@ def optional(keys):
 
 def apikeyNotValid():
     response = HTTPResponse()
-    response.status = 400
+    response.status = 200
     response.body = json.dumps(
         {
             'message': 'api key not valid',

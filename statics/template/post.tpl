@@ -25,9 +25,11 @@
            "end": $('#end-date').val()+' '+$('#end-hour').val()+':'+$('#end-minute').val()+':'+$('#end-second').val(),
            "detail": $('#detail').val(),
            "apikey": $('#apikey').val()
+         },
+         function() {
+           $(location).attr('href', '/');
          }
        );
-       $(location).attr('href', '/');
      }
     </script>
   </head>
