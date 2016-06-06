@@ -22,6 +22,8 @@ verb = {
 application = Bottle()
 post = application.post
 get = application.get
+put = application.put
+delete = application.delete
 
 
 class RequireNotSatisfiedError(Exception):
