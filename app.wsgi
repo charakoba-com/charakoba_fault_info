@@ -28,7 +28,7 @@ def index():
 @get('/detail/<id_:int>/')
 @view('detail.tpl')
 def detail(id_):
-    return {"info": api.get_info(id_)}
+    return {"info": api.get_info(id_).reverse()}
 
 
 @get('/statics/<filename:path>')
