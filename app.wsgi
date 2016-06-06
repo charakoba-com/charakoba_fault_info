@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 
 from bottle import Bottle, HTTPResponse, request, static_file
-from bottle import jinja2_view as view
+from bottle import TEMPLATE_PATH, jinja2_view as view
 import json
 import os
 import api
@@ -15,16 +15,18 @@ application = Bottle()
 get = application.get
 
 application.mount('/api', api.application)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+TEMPLATE_PATH.append(BASE_DIR + '/statics/template')
 
 
 @get('/')
-@view('statics/template/index.tpl')
+@view('index.tpl')
 def index():
     return {"infos": api.get_all_info()}
 
 
 @get('/detail/<id_:int>/')
-@view('statics/template/detail.tpl')
+@view('detail.tpl')
 def detail(id_):
     return {"info": api.get_info(id_)}
 
