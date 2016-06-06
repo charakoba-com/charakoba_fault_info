@@ -33,6 +33,13 @@ def detail(id_):
     return {"info": api.get_info(id_)}
 
 
+@get('/post')
+@view('post.tpl')
+def postpage():
+    services = ["RS", "VPS"]
+    return {"services": services}
+
+
 @get('/statics/<filename:path>')
 def static(filename):
     return static_file(filename, root=BASE_DIR+'/statics')
