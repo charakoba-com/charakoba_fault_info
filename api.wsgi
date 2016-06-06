@@ -23,7 +23,6 @@ application = Bottle()
 post = application.post
 get = application.get
 
-debug = True
 
 class RequireNotSatisfiedError(Exception):
     pass
@@ -241,6 +240,3 @@ def api_get_info():
         row = get_latest_info()
         response.body = json.dumps(row, default=default_datetime_format) + "\n"
     return response
-
-if __name__ == '__main__':
-    application.run(debug=True, host='localhost', port=8080, reloader=True)
