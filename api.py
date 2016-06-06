@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
-from bottle import Bottle, request, HTTPResponse
+from bottle import Bottle, request, HTTPResponse, debug
 from datetime import datetime
 import json
 import MySQLdb
@@ -172,7 +172,7 @@ def save(params):
                 params['service'],
                 params['begin'],
                 params.get('end', None),
-                params.get('detail', '')
+                params.get('detail') if params.get('detail') is not None else ''
             )
         )
         cursor.execute(
@@ -214,12 +214,12 @@ def api_post_info():
     try:
         params = require(required_key)
     except RequireNotSatisfiedError as e:
-            return badRequest(e.message)
+        return badRequest(e.message)
     params.update(optional(optional_key))
     try:
         id_ = save(params)['id']
     except:
-        return cannnotSave()
+        return cannotSave()
     if tweet(get_status(get_info(id_))):
         return success()
     else:
@@ -250,3 +250,6 @@ def api_get_info():
             default=default_datetime_format
         ) + "\n"
     return response
+
+if __name__ == '__main__':
+    application.run(reloader=True, host='localhost', port=8080)
