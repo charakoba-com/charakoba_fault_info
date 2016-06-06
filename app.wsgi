@@ -22,6 +22,11 @@ application.mount('/api', api.application)
 def index():
     return {"infos": api.get_all_info()}
 
+@get('/detail/<id_:int>/')
+@view('statics/template/detail.tpl')
+def detail(id_):
+    return {"info": api.get_info(id_), "url": url}
+
 
 @get('/statics/<filename:path>')
 def static(filename):
