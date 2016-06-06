@@ -27,7 +27,7 @@
         <div class="col s10 offset-s1">
           <div class="card">
             <div class="card-content green-text text-darken-4">
-              <span class="card-title">{{ info.type }} :: {{ info.service }}</span>
+              <span class="card-title">{{ info.type }} :: {{ info.service.decode('utf-8') }}</span>
               <p>
                 {{ info.begin }} - {{ info.end or '' }}
               </p>
