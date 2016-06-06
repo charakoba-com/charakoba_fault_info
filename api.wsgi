@@ -171,7 +171,7 @@ def save(params):
                 params['service'],
                 params['begin'],
                 params.get('end', None),
-                params.get('detail', '')
+                params.get('detail') if params.get('detail') is not None else ''
             )
         )
         cursor.execute(
