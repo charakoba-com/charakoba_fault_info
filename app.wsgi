@@ -20,18 +20,18 @@ application.mount('/api', api.application)
 @get('/')
 @view('statics/template/index.tpl')
 def index():
-    return {"infos": api.get_all_info()}
+    return {"infos": api.get_all_info(), "url": url}
+
 
 @get('/detail/<id_:int>/')
 @view('statics/template/detail.tpl')
 def detail(id_):
-    return {"info": api.get_info(id_), "url": url}
+    return {"info": api.get_info(id_)}
 
 
 @get('/statics/<filename:path>')
 def static(filename):
-    root = os.path.join(os.path.dirname(__file__), 'statics')
-    return static_file(filename, root=root)
+    return static_file(filename)
 
 if __name__ == '__main__':
     application.run(host='localhost', port=8080, debug=True, reloader=True)
