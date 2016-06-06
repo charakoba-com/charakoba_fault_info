@@ -275,7 +275,7 @@ def api_get_info():
 @put('/<id_:int>')
 def api_update_info(id_):
     response = HTTPResponse()
-    optional_key = ['end', 'detail']
+    optional_key = ['type', 'service', 'begin', 'end', 'detail']
     params = optional(optional_key)
     for value in params.values():
         if value is not None:
