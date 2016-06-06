@@ -207,7 +207,7 @@ def default_datetime_format(o):
     raise TypeError(repr(o) + " is not JSON serializable")
 
 
-@post('/api')
+@post('/')
 def api_post_info():
     required_key = ['type', 'service', 'begin']
     optional_key = ['end', 'detail']
@@ -226,7 +226,7 @@ def api_post_info():
         return cannotTweet()
 
 
-@get('/api')
+@get('/')
 def api_get_info():
     response = HTTPResponse()
     all_ = request.query.get('all')
