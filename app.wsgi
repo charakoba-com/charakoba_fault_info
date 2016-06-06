@@ -22,13 +22,13 @@ TEMPLATE_PATH.append(BASE_DIR + '/statics/template')
 @get('/')
 @view('index.tpl')
 def index():
-    return {"infos": api.get_all_info()}
+    return {"infos": api.get_all_info().reverse()}
 
 
 @get('/detail/<id_:int>/')
 @view('detail.tpl')
 def detail(id_):
-    return {"info": api.get_info(id_).reverse()}
+    return {"info": api.get_info(id_)}
 
 
 @get('/statics/<filename:path>')
