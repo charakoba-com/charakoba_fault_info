@@ -136,6 +136,7 @@ def get_latest_info():
 def get_uri(id_):
     uri = (
         cfg['BASE_URI'] +
+        '/detail/' +
         str(id_) +
         '/'
     )
