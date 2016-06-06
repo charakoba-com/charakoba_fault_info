@@ -219,7 +219,7 @@ def api_post_info():
     try:
         params = require(required_key)
     except RequireNotSatisfiedError as e:
-            return badRequest(e.message)
+        return badRequest(e.message)
     params.update(optional(optional_key))
     try:
         id_ = save(params)['id']
