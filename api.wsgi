@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
@@ -24,8 +25,14 @@ post = application.post
 get = application.get
 
 
-class RequireNotSatisfiedError(Exception):
-    pass
+def RequireNotSatisfiedError(key):
+    res = HTTPResponse()
+    res.status = 400
+    res.body = {
+        "message": "Requirements not satisfied.",
+        "key": key
+    }
+    return res
 
 
 def require(keys):
@@ -35,7 +42,7 @@ def require(keys):
         if value is not None:
             params[key] = value
         else:
-            raise RequireNotSatisfiedError(key)
+            return RequireNotSatisfiedError(key)
     return params
 
 
