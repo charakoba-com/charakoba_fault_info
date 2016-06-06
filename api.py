@@ -254,5 +254,9 @@ def api_get_info():
         ) + "\n"
     return response
 
+@put('/<id_:int>')
+def api_update_info(id_):
+    pass
+
 if __name__ == '__main__':
     application.run(reloader=True, host='localhost', port=8080)
