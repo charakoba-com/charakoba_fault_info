@@ -24,14 +24,8 @@ post = application.post
 get = application.get
 
 
-def RequireNotSatisfiedError(key):
-    res = HTTPResponse()
-    res.status = 400
-    res.body = json.dumps({
-        "message": "Requirements not satisfied.",
-        "key": key
-    }) + "\n"
-    return res
+class RequireNotSatisfiedError(key):
+    pass
 
 
 def require(keys):
@@ -41,7 +35,7 @@ def require(keys):
         if value is not None:
             params[key] = value
         else:
-            return RequireNotSatisfiedError(key)
+            raise RequireNotSatisfiedError(key)
     return params
 
 
