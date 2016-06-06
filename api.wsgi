@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
-from bottle import Bottle, request, HTTPResponse
+from bottle import Bottle, request, HTTPResponse, debug
 from datetime import datetime
 import json
 import MySQLdb
@@ -23,6 +23,7 @@ application = Bottle()
 post = application.post
 get = application.get
 
+debug = True
 
 class RequireNotSatisfiedError(key):
     pass
