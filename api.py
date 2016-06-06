@@ -210,6 +210,24 @@ def default_datetime_format(o):
     raise TypeError(repr(o) + " is not JSON serializable")
 
 
+def update(id_, params):
+    keys = []
+    values = []
+    for key, value in params.iteritems():
+        if value is not None:
+            keys.append(key + '=%s')
+            values.append(value)
+    values.append(id_)
+    with MySQLdb.connect(**cfg['DB_INFO']) as cursor:
+        cursor.execute(
+            '''UPDATE fault_info_log SET {0}
+            WHERE id=%s;
+            '''.format(', '.join(keys)),
+            values
+        )
+    return True
+
+
 @post('/')
 def api_post_info():
     required_key = ['type', 'service', 'begin']
@@ -256,7 +274,20 @@ def api_get_info():
 
 @put('/<id_:int>')
 def api_update_info(id_):
-    pass
+    response = HTTPResponse()
+    optional_key = ['end', 'detail']
+    params = optional(optional_key)
+    for value in params.values():
+        if value is not None:
+            update(id_, params)
+            break
+    row = get_info(id_)
+    response.body = json.dumps(
+        row,
+        default=default_datetime_format
+    )+"\n"
+    return response
+
 
 if __name__ == '__main__':
     application.run(reloader=True, host='localhost', port=8080)
