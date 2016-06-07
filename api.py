@@ -15,8 +15,11 @@ with open(configfile, 'r') as f:
     cfg = json.load(f)
 
 verb = {
-    'maintenance': 'メンテナンスを行います',
-    'event': '障害が発生しました'
+    'maintenance-will': 'メンテナンスを行います',
+    'maintenance-cont': 'メンテナンスを行っています',
+    'maintenance-done': 'メンテナンスを行いました',
+    'event-cont': '障害が発生しています',
+    'event-done': '障害が発生しました'
 }
 
 application = Bottle()
@@ -157,6 +160,13 @@ def get_uri(id_):
 
 
 def get_status(info):
+    infotype = info['type']
+    if info['begin'] < datetime.now():
+        infotype += '-will'
+    elif info.get('end') is None:
+        infotype += '-cont'
+    else:
+        infotype += '-done'
     status = (
         '【{0}】{1}〜{2}{3}、{4}. 影響サービス:{5} 詳細:{6}'
         .format(
@@ -164,7 +174,7 @@ def get_status(info):
             info['begin'],
             info.get('end', ''),
             '' if info.get('end', '') == '' else 'の間に',
-            verb[info['type']],
+            verb[infotype],
             info['service'],
             get_uri(info['id'])
         )
