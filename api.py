@@ -218,7 +218,8 @@ def tweet(status):
 def default_datetime_format(o):
     if isinstance(o, datetime):
         return o.strftime('%Y/%m/%d %H:%M:%S')
-    raise TypeError(repr(o) + " is not JSON serializable")
+    else:
+        raise TypeError(repr(o) + " is not JSON serializable")
 
 
 def update(id_, params):
@@ -235,6 +236,16 @@ def update(id_, params):
             WHERE id=%s;
             '''.format(', '.join(keys)),
             values
+        )
+    return True
+
+
+def delete(id_):
+    with MySQLdb.connect(**cfg['DB_INFO']) as cursor:
+        cursor.execute(
+            '''DELETE FROM fault_info_log WHERE id=%s;
+            ''',
+            id_
         )
     return True
 
@@ -300,6 +311,12 @@ def api_update_info(id_):
         default=default_datetime_format
     )+"\n"
     return response
+
+
+@delete('/<id_:int>')
+def api_delete_info(id_):
+    response = HTTPResponse()
+    delete(id_)
 
 
 if __name__ == '__main__':
