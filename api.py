@@ -240,7 +240,7 @@ def update(id_, params):
     return True
 
 
-def delete(id_):
+def delete_info(id_):
     with MySQLdb.connect(**cfg['DB_INFO']) as cursor:
         cursor.execute(
             '''DELETE FROM fault_info_log WHERE id=%s;
@@ -316,7 +316,8 @@ def api_update_info(id_):
 @delete('/<id_:int>')
 def api_delete_info(id_):
     response = HTTPResponse()
-    delete(id_)
+    delete_info(id_)
+    return Response
 
 
 if __name__ == '__main__':
