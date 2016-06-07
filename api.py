@@ -317,7 +317,7 @@ def api_update_info(id_):
 def api_delete_info(id_):
     response = HTTPResponse()
     delete_info(id_)
-    return Response
+    return response
 
 
 if __name__ == '__main__':
