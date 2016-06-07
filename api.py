@@ -15,9 +15,12 @@ with open(configfile, 'r') as f:
     cfg = json.load(f)
 
 verb = {
+    'maintenance': 'メンテナンスを行っています',
     'maintenance-will': 'メンテナンスを行います',
     'maintenance-cont': 'メンテナンスを行っています',
     'maintenance-done': 'メンテナンスを行いました',
+    'event': '障害が発生しています',
+    'event-will': '',
     'event-cont': '障害が発生しています',
     'event-done': '障害が発生しました'
 }
@@ -165,7 +168,7 @@ def get_status(info):
         infotype += '-will'
     elif info.get('end') is None:
         infotype += '-cont'
-    else:
+    elif info.get('end') < datetime.now():
         infotype += '-done'
     status = (
         '【{0}】{1}〜{2}{3}、{4}. 影響サービス:{5} 詳細:{6}'
