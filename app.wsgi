@@ -17,6 +17,7 @@ get = application.get
 application.mount('/api', api.application)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_PATH.append(BASE_DIR + '/statics/template')
+services = ["RS", "VPS"]
 
 
 @get('/')
@@ -33,10 +34,24 @@ def detail(id_):
     return {"info": api.get_info(id_)}
 
 
-@get('/post')
+@get('/detail/<id_:int>/edit/')
+@view('edit.tpl')
+def edit(id_):
+    info = api.get_info(id_)
+    info['begin_date'] = info['begin'].date()
+    info['begin_hour'] = info['begin'].time().hour
+    info['begin_minute'] = info['begin'].time().minute
+    info['begin_second'] = info['begin'].time().second
+    info['end_date'] = info['end'].date()
+    info['end_hour'] = info['end'].time().hour
+    info['end_minute'] = info['end'].time().minute
+    info['end_second'] = info['end'].time().second
+    return {"services": services, "info": info}
+
+
+@get('/post/')
 @view('post.tpl')
 def postpage():
-    services = ["RS", "VPS"]
     return {"services": services}
 
 
