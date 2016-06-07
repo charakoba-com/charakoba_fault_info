@@ -173,6 +173,7 @@ def get_status(info):
 
 
 def save(params):
+
     with MySQLdb.connect(
             cursorclass=DictCursor,
             **cfg['DB_INFO']) as cursor:
@@ -186,7 +187,7 @@ def save(params):
                 params['service'],
                 params['begin'],
                 params.get('end', None),
-                params.get('detail') if params.get('detail') is not None else ''
+                params['detail'] if params.get('detail') is not None else ''
             )
         )
         cursor.execute(
@@ -295,6 +296,7 @@ def api_get_info():
             default=default_datetime_format
         ) + "\n"
     return response
+
 
 @put('/<id_:int>')
 def api_update_info(id_):
