@@ -19,7 +19,7 @@
               </p>
             </div>
             <div class="card-action">
-              <a href="detail/{{ info.id }}/">Detail</a>
+              <a href="detail/{{ info.id }}">Detail</a>
             </div>
           </div>
         </div>
