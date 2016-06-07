@@ -28,13 +28,13 @@ def index():
     return {"infos": infos}
 
 
-@get('/detail/<id_:int>/')
+@get('/detail/<id_:int>')
 @view('detail.tpl')
 def detail(id_):
     return {"info": api.get_info(id_)}
 
 
-@get('/detail/<id_:int>/edit/')
+@get('/detail/<id_:int>/edit')
 @view('edit.tpl')
 def edit(id_):
     info = api.get_info(id_)
@@ -49,7 +49,7 @@ def edit(id_):
     return {"services": services, "info": info}
 
 
-@get('/post/')
+@get('/post')
 @view('post.tpl')
 def postpage():
     return {"services": services}
