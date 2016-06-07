@@ -161,7 +161,7 @@ def get_uri(id_):
 
 def get_status(info):
     infotype = info['type']
-    if info['begin'] < datetime.now():
+    if info['begin'] > datetime.now():
         infotype += '-will'
     elif info.get('end') is None:
         infotype += '-cont'
