@@ -186,7 +186,6 @@ def get_status(info):
 
 
 def save(params):
-
     with MySQLdb.connect(
             cursorclass=DictCursor,
             **cfg['DB_INFO']) as cursor:
