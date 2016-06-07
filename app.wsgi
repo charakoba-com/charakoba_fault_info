@@ -16,7 +16,7 @@ get = application.get
 
 application.mount('/api', api.application)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-TEMPLATE_PATH.append(BASE_DIR + '/statics/template')
+TEMPLATE_PATH.append(BASE_DIR + '/template')
 services = ["RS", "VPS"]
 
 
@@ -53,11 +53,6 @@ def edit(id_):
 @view('post.tpl')
 def postpage():
     return {"services": services}
-
-
-@get('/statics/<filename:path>')
-def static(filename):
-    return static_file(filename, root=BASE_DIR+'/statics')
 
 if __name__ == '__main__':
     application.run(host='localhost', port=8080)
