@@ -172,8 +172,8 @@ def get_status(info):
         .format(
             info['type'],
             info['begin'],
-            info.get('end', ''),
-            '' if info.get('end', '') == '' else 'の間に',
+            '' if info.get('end') is None else info.get('end'),
+            '' if info.get('end') is None else 'の間に',
             verb[infotype],
             info['service'],
             get_uri(info['id'])
