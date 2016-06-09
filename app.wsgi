@@ -24,7 +24,7 @@ services = ["RS", "VPS"]
 def HTML_escape(info):
     def _(row):
         row['service'] = escape(row['service'])
-        row['detail'] = escape(row['service'])
+        row['detail'] = escape(row['detail'])
         return row
 
     if isinstance(info, list):
