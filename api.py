@@ -156,8 +156,7 @@ def get_uri(id_):
     uri = (
         cfg['BASE_URI'] +
         'detail/' +
-        str(id_) +
-        '/'
+        str(id_)
     )
     return uri
 
