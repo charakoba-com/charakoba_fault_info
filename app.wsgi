@@ -5,6 +5,7 @@ from bottle import Bottle, HTTPResponse, request, static_file
 from bottle import TEMPLATE_PATH, jinja2_view as view
 import json
 import os
+from xml.sax.saxutils import escape
 import api
 
 configfile = os.path.join(os.path.dirname(__file__), 'config.json')
@@ -20,18 +21,35 @@ TEMPLATE_PATH.append(BASE_DIR + '/template')
 services = ["RS", "VPS"]
 
 
+def HTML_escape(info):
+    def _(row):
+        row['service'] = escape(row['service'])
+        row['detail'] = escape(row['service'])
+        return row
+
+    if isinstance(info, list):
+        ret = []
+        for row in info:
+            ret.append(_(row))
+    if isinstance(info, dict):
+        ret = _(row)
+    return ret
+
+
 @get('/')
 @view('index.tpl')
 def index():
     infos = list(api.get_all_info())
     infos.reverse()
+    infos = HTML_escape(infos)
     return {"infos": infos}
 
 
 @get('/detail/<id_:int>')
 @view('detail.tpl')
 def detail(id_):
-    return {"info": api.get_info(id_)}
+    info = HTML_escape(api.get_info(id_))
+    return {"info": info}
 
 
 @get('/detail/<id_:int>/edit')
