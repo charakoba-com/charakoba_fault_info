@@ -32,7 +32,7 @@ def HTML_escape(info):
         for row in info:
             ret.append(_(row))
     if isinstance(info, dict):
-        ret = _(row)
+        ret = _(info)
     return ret
 
 
