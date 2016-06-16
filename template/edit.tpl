@@ -111,7 +111,7 @@
                 </div>
                 <div class="row">
                   <div class="ipnut-field col s12">
-                    <input class="datepicker" id="end-date" name="end-date" type="date" value="{{ info.end_date }}" type-date=""/>
+                    <input class="datepicker" id="end-date" name="end-date" type="date" value="{% if info.end_date %}{{ info.end_date }}{% endif %}" type-date=""/>
                   </div>
                 </div>
                 <div class="row">
