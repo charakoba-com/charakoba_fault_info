@@ -149,8 +149,8 @@
                 </div>
                 <div class="row">
                   <div class="input-field col s12">
+                    <input id="tweet" name="tweet" type="checkbox"/>
                     <label for="tweet">tweet?</label>
-                    <input id="tweet" name="tweet" type="checkbox" value=""/>
                   </div>
                 </div>
                 <div class="row">
