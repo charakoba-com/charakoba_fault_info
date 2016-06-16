@@ -18,7 +18,6 @@ get = application.get
 application.mount('/api', api.application)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_PATH.append(BASE_DIR + '/template')
-services = ["RS", "VPS"]
 
 
 def HTML_escape(info):
@@ -70,13 +69,13 @@ def edit(id_):
         info['end_hour'] = None
         info['end_minute'] = None
         info['end_second'] = None
-    return {"services": services, "info": info}
+    return {"services": cfg['SERVICES'], "info": info}
 
 
 @get('/post')
 @view('post.tpl')
 def postpage():
-    return {"services": services}
+    return {"services": cfg['SERVICES']}
 
 if __name__ == '__main__':
     application.run(host='localhost', port=8080)
