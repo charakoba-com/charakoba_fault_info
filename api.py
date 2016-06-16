@@ -160,6 +160,12 @@ def get_uri(id_):
     )
     return uri
 
+def type_to_jp(infotype):
+    if infotype == 'event':
+        return '障害'
+    elif infotype == 'maintenance':
+        return 'メンテナンス'
+
 
 def get_status(info):
     infotype = info['type']
@@ -172,7 +178,7 @@ def get_status(info):
     status = (
         '【{0}】{1}〜{2}{3}、{4}. 影響サービス:{5} 詳細:{6}'
         .format(
-            info['type'],
+            type_to_info(info['type']),
             info['begin'],
             '' if info.get('end') is None else info.get('end'),
             '' if info.get('end') is None else 'の間に',
