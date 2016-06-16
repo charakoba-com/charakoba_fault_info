@@ -25,6 +25,7 @@
            "begin": $('#begin-date').val()+' '+$('#begin-hour').val()+':'+$('#begin-minute').val()+':'+$('#begin-second').val(),
            "end": $('#end-date').val()+' '+$('#end-hour').val()+':'+$('#end-minute').val()+':'+$('#end-second').val(),
            "detail": $('#detail').val(),
+           "detail": $('#tweet').val(),
            "apikey": $('#apikey').val()
          },
          success: function() {
@@ -144,6 +145,12 @@
                 <div class="row">
                   <div class="input-field col s12">
                     <textarea id="detail" class="materialize-textarea" cols="30" name="detail" rows="10" length="128">{{ info.detail.decode('utf-8') }}</textarea>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <label for="tweet">tweet?</label>
+                    <input id="tweet" name="tweet" type="checkbox" value=""/>
                   </div>
                 </div>
                 <div class="row">
