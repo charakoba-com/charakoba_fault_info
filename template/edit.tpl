@@ -25,7 +25,7 @@
            "begin": $('#begin-date').val()+' '+$('#begin-hour').val()+':'+$('#begin-minute').val()+':'+$('#begin-second').val(),
            "end": $('#end-date').val()+' '+$('#end-hour').val()+':'+$('#end-minute').val()+':'+$('#end-second').val(),
            "detail": $('#detail').val(),
-           "detail": $('#tweet').val(),
+           "tweet": $('#tweet').val(),
            "apikey": $('#apikey').val()
          },
          success: function() {
