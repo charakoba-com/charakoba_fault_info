@@ -60,10 +60,11 @@ def edit(id_):
     info['begin_hour'] = info['begin'].time().hour
     info['begin_minute'] = info['begin'].time().minute
     info['begin_second'] = info['begin'].time().second
-    info['end_date'] = info['end'].date()
-    info['end_hour'] = info['end'].time().hour
-    info['end_minute'] = info['end'].time().minute
-    info['end_second'] = info['end'].time().second
+    if info['end_date'] is not None:
+        info['end_date'] = info['end'].date()
+        info['end_hour'] = info['end'].time().hour
+        info['end_minute'] = info['end'].time().minute
+        info['end_second'] = info['end'].time().second
     return {"services": services, "info": info}
 
 
