@@ -312,8 +312,15 @@ def api_get_info():
 @put('/<id_:int>')
 def api_update_info(id_):
     response = HTTPResponse()
+    requred_key = ['apikey']
     optional_key = ['type', 'service', 'begin', 'end', 'detail']
-    params = optional(optional_key)
+    try:
+        params = requrie(required_key)
+    except RequiredSatisfiedError as e:
+        return badRequest(e.message)
+    params.update(optional(optional_key))
+    if params['apikey'] != cfg['API_KEY']:
+        return apikeyNotValid()
     for value in params.values():
         if value is not None:
             update(id_, params)
