@@ -319,11 +319,13 @@ def api_update_info(id_):
     except RequiredSatisfiedError as e:
         return badRequest(e.message)
     params.update(optional(optional_key))
+    tw_flg = request.forms.get('tweet', False)
     if params['apikey'] != cfg['API_KEY']:
         return apikeyNotValid()
     for value in params.values():
         if value is not None:
-            update(id_, params)
+            if update(id_, params) and tw_flg:
+                tweet(get_status(get_info(id_)))
             break
     row = get_info(id_)
     response.body = json.dumps(
