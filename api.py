@@ -178,7 +178,7 @@ def get_status(info):
     status = (
         '【{0}】{1}〜{2}{3}、{4}. 影響サービス:{5} 詳細:{6}'
         .format(
-            type_to_info(info['type']),
+            type_to_jp(info['type']),
             info['begin'],
             '' if info.get('end') is None else info.get('end'),
             '' if info.get('end') is None else 'の間に',
