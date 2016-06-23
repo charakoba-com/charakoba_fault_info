@@ -318,11 +318,11 @@ def api_get_info():
 @put('/<id_:int>')
 def api_update_info(id_):
     response = HTTPResponse()
-    requred_key = ['apikey']
+    required_key = ['apikey']
     optional_key = ['type', 'service', 'begin', 'end', 'detail']
     try:
-        params = requrie(required_key)
-    except RequiredSatisfiedError as e:
+        params = require(required_key)
+    except RequireNotSatisfiedError as e:
         return badRequest(e.message)
     params.update(optional(optional_key))
     tw_flg = request.forms.get('tweet', False)
