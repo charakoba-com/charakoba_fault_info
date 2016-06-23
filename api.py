@@ -247,14 +247,15 @@ def update(id_, params):
         if key != 'apikey' and value is not None:
             keys.append(key + '=%s')
             values.append(value)
-    values.append(id_)
-    with MySQLdb.connect(**cfg['DB_INFO']) as cursor:
-        cursor.execute(
-            '''UPDATE fault_info_log SET {0}
-            WHERE id=%s;
-            '''.format(', '.join(keys)),
-            *values
-        )
+    if keys:
+        values.append(id_)
+        with MySQLdb.connect(**cfg['DB_INFO']) as cursor:
+            cursor.execute(
+                '''UPDATE fault_info_log SET {0}
+                WHERE id=%s;
+                '''.format(', '.join(keys)),
+                *values
+            )
     return True
 
 
