@@ -252,7 +252,7 @@ def update(id_, params):
             '''UPDATE fault_info_log SET {0}
             WHERE id=%s;
             '''.format(', '.join(keys)),
-            values, id_
+            *values, id_
         )
     return True
 
