@@ -244,7 +244,7 @@ def update(id_, params):
     keys = []
     values = []
     for key, value in params.iteritems():
-        if value is not None:
+        if key != 'apikey' and value is not None:
             keys.append(key + '=%s')
             values.append(value)
     values.append(id_)
