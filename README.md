@@ -10,6 +10,7 @@ Python 2.xとWSGIの環境で動作します。動作テストはapache + mod_ws
 config.json.defaultをconfig.jsonというファイルにコピーして、中の空欄を埋めてください。それぞれの設定項目の意味は以下です。
 
 | 名前 | 意味 | 例 |
+|:----:|:----:|:--:|
 | BASE_URI | ルートまでのアドレス | "http://hoge.example.com/" |
 | DB_INFO | MySQL データベースの情報 | |
 | TWITTER_INFO | twitter REST APIの情報 | |
