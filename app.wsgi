@@ -59,7 +59,7 @@ def edit(id_):
     info['begin_hour'] = info['begin'].time().hour
     info['begin_minute'] = info['begin'].time().minute
     info['begin_second'] = info['begin'].time().second
-    if info.get('end_date') is not None:
+    if info.get('end') is not None:
         info['end_date'] = info['end'].date()
         info['end_hour'] = info['end'].time().hour
         info['end_minute'] = info['end'].time().minute
