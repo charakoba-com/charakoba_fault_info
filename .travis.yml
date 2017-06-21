@@ -15,6 +15,9 @@ addons:
     packages:
       - glide
 
+before_install:
+  - export GOPATH=$HOME/go
+
 install:
   - make -C backend deps
   - make -C backend initdb
