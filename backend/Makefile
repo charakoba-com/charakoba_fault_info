@@ -5,6 +5,7 @@ glide:
 	curl https://glide.sh/get | sh
 
 deps:
+	glide up
 	glide install
 
 initdb:
