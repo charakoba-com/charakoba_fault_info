@@ -35,9 +35,9 @@
   </div>
 
   <script>
+   var self = this
    submitEdit(e) {
      var request = window.superagent
-     var self = this
      var updateInfo = { end: e.target[1].value, token: e.target[2].value }
      request.put("/" + self.id)
             .send(updateInfo)
