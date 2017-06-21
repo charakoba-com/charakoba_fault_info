@@ -16,7 +16,7 @@ addons:
       - glide
 
 before_install:
-  - export GOPATH=$HOME/go
+  - export GOPATH=$HOME
 
 install:
   - make -C backend deps
