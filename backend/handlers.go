@@ -97,7 +97,7 @@ func tweet(message string) error {
 	tk := oauth1.NewToken(c.TwAccessToken, c.TwAccessSecret)
 	httpclient := cfg.Client(oauth1.NoContext, tk)
 	client := twitter.NewClient(httpclient)
-	tweet, resp, err := client.Statuses.Update(message, nil)
+	_, _, err := client.Statuses.Update(message, nil)
 
 	return err
 }
