@@ -83,7 +83,7 @@ func (svc *InfoService) Update(tx *sql.Tx, id int, request model.UpdateInfoHandl
 		di.Begin = begin
 	}
 	if request.End != "" {
-		end, err := time.Parse("2006-01-02:15:04:05", request.End)
+		end, err := time.Parse("2006-01-02 15:04:05", request.End)
 		if err != nil {
 			return errors.Wrap(err, `parsing end time`)
 		}
