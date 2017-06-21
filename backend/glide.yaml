@@ -1,0 +1,14 @@
+package: github.com/charakoba-com/fault_info/backend
+import:
+- package: github.com/gorilla/mux
+  version: ^1.4.0
+- package: github.com/go-sql-driver/mysql
+  version: ^1.3.0
+- package: github.com/spf13/viper
+- package: github.com/fsnotify/fsnotify
+  version: ^1.4.2
+- package: github.com/dghubble/go-twitter
+  subpackages:
+  - twitter
+- package: github.com/dghubble/oauth1
+  version: ^0.4.0
