@@ -22,6 +22,9 @@
             <div class="label" for="end_edit_{ id }">end:</div>
             <input id="end_edit_{ id }" class="uk-input" name="end_edit_{ id }" type="date" placeholder="YYYY-MM-DD hh:mm:ss"/>
           </div>
+          <div class="uk-margin">
+            <input class="uk-input" name="token" type="text" placeholder="Token"/>
+          </div>
           <p class="uk-text-right">
             <button class="uk-button uk-button-default uk-model-close" type="button">Cancel</button>
             <button class="uk-button uk-button-primary" type="submit">submit</button>
