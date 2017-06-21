@@ -5,13 +5,13 @@
   <form onsubmit="{ submitInfo }">
     <fieldset class="uk-fieldset">
       <div class="uk-margin">
-        <select class="uk-select" each="{ types }">
-          <option>{ type }</option>
+        <select class="uk-select">
+          <option each="{ types }">{ type }</option>
         </select>
       </div>
       <div class="uk-margin">
-        <select class="uk-select" each="{ services }">
-          <option>{ name }</option>
+        <select class="uk-select">
+          <option each="{ services}">{ name }</option>
         </select>
       </div>
       <div class="uk-margin">
