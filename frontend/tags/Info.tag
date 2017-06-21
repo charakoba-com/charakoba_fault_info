@@ -7,7 +7,7 @@
     <div class="uk-card-body">
       <p>{ detail }</p>
     </div>
-    <div class="uk-card-footer" if="{ end != undefined }">
+    <div class="uk-card-footer" if="{ end == undefined }">
       <a href="#edit" class="uk-button uk-button-text uk-align-right" uk-toggle>edit</a>
     </div>
   </div>
