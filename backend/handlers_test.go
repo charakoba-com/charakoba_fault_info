@@ -12,7 +12,6 @@ import (
 	"github.com/charakoba-com/fault_info/backend"
 	"github.com/charakoba-com/fault_info/backend/db"
 	"github.com/charakoba-com/fault_info/backend/model"
-	"github.com/go-sql-driver/mysql"
 )
 
 var s *faultinfo.Server
@@ -84,7 +83,7 @@ func TestGetInfoListHandler(t *testing.T) {
 		Type:    "maintenance",
 		Service: "www",
 		Begin:   time.Date(2017, 1, 1, 0, 0, 0, 0, time.UTC),
-		End:     mysql.NullTime{Valid: true, Time: time.Date(2017, 1, 1, 12, 0, 0, 0, time.UTC)},
+		End:     time.Date(2017, 1, 1, 12, 0, 0, 0, time.UTC),
 		Detail:  "test data",
 	}
 	if response.Info == nil {
