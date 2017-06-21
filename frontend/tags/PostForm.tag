@@ -50,8 +50,22 @@
           })
 
    submitInfo(e) {
-     console.log(e.target)
-     return false
+     var newInfo = {
+       info_type: e.target.1.value,
+       service: e.target.2.value,
+       begin: e.target.3.value,
+       token: e.target.6.value
+     }
+     if (e.target.4.value != "") {
+       newInfo.end = e.target.4.value
+     }
+     if (e.target.5.value != "") {
+       newInfo.detail = e.target.5.value
+     }
+
+     request.post("/")
+            .send(newInfo)
+            .end(function(err, res) {})
    }
   </script>
 </PostForm>
