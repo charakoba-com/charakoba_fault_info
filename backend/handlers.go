@@ -220,6 +220,7 @@ func UpdateInfoHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var svc service.InfoService
+	var info model.Info
 	tx, err := db.BeginTx()
 	if err != nil {
 		httpError(w, http.StatusInternalServerError, `database error`, err)
@@ -229,12 +230,16 @@ func UpdateInfoHandler(w http.ResponseWriter, r *http.Request) {
 		httpError(w, http.StatusInternalServerError, `record update`, err)
 		return
 	}
+	if err := info.Load(tx, id); err != nil {
+		httpError(w, http.StatusInternalServerError, `loading info`, err)
+		return
+	}
 	if err := tx.Commit(); err != nil {
 		httpError(w, http.StatusInternalServerError, `commit transaction`, err)
 		return
 	}
 	// tweet
-	msg := fmt.Sprintf("=updated= %s :: %s | Service: %s / Date: %s - %s ", request.InfoType, request.Detail, request.Service, request.Begin, request.End)
+	msg := fmt.Sprintf("=updated= %s :: %s | Service: %s / Date: %s - %s ", info.Type, info.Detail, info.Service, info.Begin, info.End)
 	if len(msg+c.BaseURI) > 140 {
 		msg = msg[:135-len(c.BaseURI)] + `...`
 	}
