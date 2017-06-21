@@ -14,6 +14,7 @@ import (
 	"github.com/dghubble/go-twitter/twitter"
 	"github.com/dghubble/oauth1"
 	"github.com/fsnotify/fsnotify"
+	"github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 	"github.com/spf13/viper"
 )
@@ -47,6 +48,10 @@ func init() {
 		log.Printf("token is now configured. (token: %s)", c.Token)
 	})
 	viper.SetDefault("token", "")
+	viper.SetDefault("DBUser", "root")
+	viper.SetDefault("DBPasswd", "")
+	viper.SetDefault("DBAddr", "127.0.0.1:3306")
+	viper.SetDefault("DBName", "faultinfo_db")
 	c = config{
 		Token:          viper.GetString(`token`),
 		BaseURI:        viper.GetString(`baseuri`),
@@ -55,8 +60,21 @@ func init() {
 		TwAccessToken:  viper.GetString(`twitter.accesstoken`),
 		TwAccessSecret: viper.GetString(`twitter.accesssecret`),
 	}
+	dbcfg := &mysql.Config{
+		User:      viper.GetString(`mysql.user`),
+		Passwd:    viper.GetString(`mysql.password`),
+		Net:       "tcp",
+		Addr:      viper.GetString(`mysql.address`),
+		DBName:    viper.GetString(`mysql.database`),
+		ParseTime: true,
+	}
 
 	log.Printf("token is now configured. (token: %s)", c.Token)
+	if err := db.Init(dbcfg); err != nil {
+		panic(err)
+	}
+	log.Printf("connected database")
+
 }
 
 func httpJSONWithStatus(w http.ResponseWriter, st int, response interface{}) {
