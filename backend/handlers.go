@@ -233,6 +233,16 @@ func UpdateInfoHandler(w http.ResponseWriter, r *http.Request) {
 		httpError(w, http.StatusInternalServerError, `commit transaction`, err)
 		return
 	}
+	// tweet
+	msg := fmt.Sprintf("=updated= %s :: %s | Service: %s / Date: %s - %s ", request.InfoType, request.Detail, request.Service, request.Begin, request.End)
+	if len(msg+c.BaseURI) > 140 {
+		msg = msg[:135-len(c.BaseURI)] + `...`
+	}
+	msg = msg + c.BaseURI
+	if err := tweet(msg); err != nil {
+		httpError(w, http.StatusInternalServerError, `successfully commited, but cannot tweet`, err)
+		return
+	}
 
 	// generate response
 	response := model.UpdateInfoHandlerResponse{
