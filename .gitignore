@@ -1,5 +1,5 @@
 /cgi-bin/index.py
-/config.json
+config.*
 
 
 # Created by https://www.gitignore.io/api/go,sass,macos,emacs
