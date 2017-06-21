@@ -60,7 +60,9 @@
 
      request.post("/")
             .send(newInfo)
-            .end(function(err, res) {})
+            .end(function(err, res) {
+              console.log(res)
+            })
    }
   </script>
 </PostForm>
