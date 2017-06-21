@@ -1,3 +1,6 @@
+
+
+
 <PostForm>
   <form onsubmit="{ submitInfo }">
     <fieldset class="uk-fieldset">
@@ -35,12 +38,12 @@
   <script>
    var request = window.superagent
    var self = this
-   request.get("http://localhost:8080/types")
+   request.get("/types")
           .end(function(err, res) {
             self.types = res.body.types
             self.update()
           })
-   request.get("http://localhost:8080/services")
+   request.get("/services")
           .end(function(err, res) {
             self.services = res.body.services
             self.update()
