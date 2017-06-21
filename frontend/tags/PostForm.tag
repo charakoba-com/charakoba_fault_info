@@ -61,7 +61,7 @@
      request.post("/")
             .send(newInfo)
             .end(function(err, res) {
-              console.log(res)
+              self.update()
             })
    }
   </script>
