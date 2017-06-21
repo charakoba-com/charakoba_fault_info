@@ -21,8 +21,8 @@ install:
   - make -C backend inittest
 
 script:
-  - cd backend; go vet -n -x
-  - cd backend; go test -v $(glide nv)
+  - go vet -n -x $(glide nv -d ./backend | grep ./ | cat)
+  - go test -v $(glide nv -d ./backend)
 
 notifications:
   email: false
