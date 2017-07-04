@@ -7,7 +7,7 @@
    request = window.superagent
    var self = this
 
-   request.get("/")
+   request.get("/api")
           .end(function(err, res) {
             self.list = Array.reverse(res.body.info)
             self.update()

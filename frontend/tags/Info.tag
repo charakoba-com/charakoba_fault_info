@@ -39,7 +39,7 @@
    submitEdit(e) {
      var request = window.superagent
      var updateInfo = { end: e.target[1].value, token: e.target[2].value }
-     request.put("/" + self.id)
+     request.put("/api/" + self.id)
             .send(updateInfo)
             .end(function(err, res) {
               self.update()

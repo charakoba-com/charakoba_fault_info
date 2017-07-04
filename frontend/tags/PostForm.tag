@@ -38,12 +38,12 @@
   <script>
    var request = window.superagent
    var self = this
-   request.get("/types")
+   request.get("/api/types")
           .end(function(err, res) {
             self.types = res.body.types
             self.update()
           })
-   request.get("/services")
+   request.get("/api/services")
           .end(function(err, res) {
             self.services = res.body.services
             self.update()
@@ -58,7 +58,7 @@
        newInfo.detail = e.target[5].value
      }
 
-     request.post("/")
+     request.post("/api/")
             .send(newInfo)
             .end(function(err, res) {
               self.update()
