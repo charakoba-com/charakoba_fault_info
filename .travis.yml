@@ -22,7 +22,7 @@ install:
 
 script:
   - go vet -n -x $(glide nv -d ./backend | grep ./ | cat)
-  - cd backend; go test -v $(glide nv -d)
+  - go test -v $(glide nv -d ./backend) ./backend
 
 notifications:
   email: false
