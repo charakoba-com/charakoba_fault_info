@@ -57,10 +57,12 @@
      if (e.target[5].value != "") {
        newInfo.detail = e.target[5].value
      }
+     e.target[8].disabled=true
 
      request.post("/api/")
             .send(newInfo)
             .end(function(err, res) {
+              e.target[8].disabled=false
               self.update()
             })
    }
