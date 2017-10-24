@@ -62,7 +62,6 @@
      request.post("/api/")
             .send(newInfo)
             .end(function(err, res) {
-              e.target[8].disabled=false
               self.update()
             })
    }
